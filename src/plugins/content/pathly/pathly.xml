@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="content" method="upgrade">
+    <name>plg_content_pathly</name>
+    <author>Pathly</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Pathly</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE</license>
+    <authorEmail>contact@pathlyhq.com</authorEmail>
+    <authorUrl>https://pathlyhq.com</authorUrl>
+    <version>0.1.0</version><!-- x-release-please-version -->
+    <description>PLG_CONTENT_PATHLY_XML_DESCRIPTION</description>
+    <namespace path="src">Pathly\Plugin\Content\Pathly</namespace>
+    <files>
+        <folder plugin="pathly">services</folder>
+        <folder>language</folder>
+        <folder>src</folder>
+    </files>
+</extension>

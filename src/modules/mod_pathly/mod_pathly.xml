@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" client="administrator" method="upgrade">
+    <name>mod_pathly</name>
+    <author>Pathly</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Pathly</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE</license>
+    <authorEmail>contact@pathlyhq.com</authorEmail>
+    <authorUrl>https://pathlyhq.com</authorUrl>
+    <version>0.1.0</version><!-- x-release-please-version -->
+    <description>MOD_PATHLY_XML_DESCRIPTION</description>
+    <namespace path="src">Pathly\Module\Pathly</namespace>
+    <files>
+        <folder module="mod_pathly">services</folder>
+        <folder>language</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+</extension>

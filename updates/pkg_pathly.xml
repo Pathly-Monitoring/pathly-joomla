@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Update server of the Pathly package, read by the Joomla update manager. -->
+<updates>
+    <update>
+        <name>Pathly</name>
+        <description>Pathly for Joomla: Ping, Flow prepared by Lumi, replay after updates.</description>
+        <element>pkg_pathly</element>
+        <type>package</type>
+        <client>site</client>
+        <version>0.1.0</version><!-- x-release-please-version -->
+        <infourl title="Pathly">https://github.com/Pathly-Monitoring/pathly-joomla/releases</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/Pathly-Monitoring/pathly-joomla/releases/download/v0.1.0/pkg_pathly-0.1.0.zip</downloadurl><!-- x-release-please-version -->
+        </downloads>
+        <maintainer>Pathly</maintainer>
+        <maintainerurl>https://pathlyhq.com</maintainerurl>
+        <targetplatform name="joomla" version="((4\.4)|(5\.[0-9]+))"/>
+        <php_minimum>7.4</php_minimum>
+    </update>
+</updates>

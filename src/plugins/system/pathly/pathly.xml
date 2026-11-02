@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>plg_system_pathly</name>
+    <author>Pathly</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Pathly</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE</license>
+    <authorEmail>contact@pathlyhq.com</authorEmail>
+    <authorUrl>https://pathlyhq.com</authorUrl>
+    <version>0.1.0</version><!-- x-release-please-version -->
+    <description>PLG_SYSTEM_PATHLY_XML_DESCRIPTION</description>
+    <namespace path="src">Pathly\Plugin\System\Pathly</namespace>
+    <files>
+        <folder plugin="pathly">services</folder>
+        <folder>language</folder>
+        <folder>src</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldprefix="Pathly\Plugin\System\Pathly\Field">
+                <field
+                    name="api_key"
+                    type="pathlykey"
+                    label="PLG_SYSTEM_PATHLY_FIELD_KEY_LABEL"
+                    description="PLG_SYSTEM_PATHLY_FIELD_KEY_DESC"
+                    filter="raw"
+                />
+                <field
+                    name="badge"
+                    type="radio"
+                    layout="joomla.form.field.radio.switcher"
+                    default="0"
+                    filter="integer"
+                    label="PLG_SYSTEM_PATHLY_FIELD_BADGE_LABEL"
+                    description="PLG_SYSTEM_PATHLY_FIELD_BADGE_DESC"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

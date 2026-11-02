@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="package" method="upgrade">
+    <name>PKG_PATHLY</name>
+    <packagename>pathly</packagename>
+    <author>Pathly</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Pathly</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE</license>
+    <authorEmail>contact@pathlyhq.com</authorEmail>
+    <authorUrl>https://pathlyhq.com</authorUrl>
+    <packager>Pathly</packager>
+    <packagerurl>https://pathlyhq.com</packagerurl>
+    <version>0.1.0</version><!-- x-release-please-version -->
+    <description>PKG_PATHLY_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
+    <blockChildUninstall>true</blockChildUninstall>
+    <files folder="packages">
+        <file type="plugin" id="pathly" group="system">plg_system_pathly.zip</file>
+        <file type="plugin" id="pathly" group="content">plg_content_pathly.zip</file>
+        <file type="module" id="mod_pathly" client="administrator">mod_pathly.zip</file>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/pkg_pathly.sys.ini</language>
+        <language tag="fr-FR">fr-FR/pkg_pathly.sys.ini</language>
+        <language tag="es-ES">es-ES/pkg_pathly.sys.ini</language>
+        <language tag="de-DE">de-DE/pkg_pathly.sys.ini</language>
+    </languages>
+    <updateservers>
+        <server type="extension" priority="1" name="Pathly">https://raw.githubusercontent.com/Pathly-Monitoring/pathly-joomla/main/updates/pkg_pathly.xml</server>
+    </updateservers>
+</extension>
