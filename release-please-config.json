@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "package-name": "pathly-joomla",
+      "changelog-path": "CHANGELOG.md",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        "src/plugins/system/pathly/src/Version.php",
+        "src/pkg_pathly.xml",
+        "src/plugins/system/pathly/pathly.xml",
+        "src/plugins/content/pathly/pathly.xml",
+        "src/modules/mod_pathly/mod_pathly.xml",
+        "updates/pkg_pathly.xml"
+      ]
+    }
+  }
+}

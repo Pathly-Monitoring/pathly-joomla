@@ -1,0 +1,79 @@
+# Lint, unit tests with 100 % coverage (lines and branches), integration on
+# the official Joomla images (4.4 and 5) with the JED Checker, and the package.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          coverage: none
+      - run: composer install --no-interaction --no-progress
+      # PHP 7.4 is the oldest PHP of Joomla 4.4: every file must parse there.
+      - run: find src tests bin -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+      - run: vendor/bin/phpcs
+      - name: XML manifests are valid
+        run: for f in src/pkg_pathly.xml src/plugins/*/pathly/pathly.xml src/modules/mod_pathly/mod_pathly.xml updates/pkg_pathly.xml; do php -r 'exit(simplexml_load_file($argv[1]) === false ? 1 : 0);' "$f"; done
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.1", "8.2", "8.3"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: ${{ matrix.php == '8.2' && 'xdebug' || 'none' }}
+      - run: composer install --no-interaction --no-progress
+      - if: matrix.php != '8.2'
+        run: vendor/bin/phpunit
+      - if: matrix.php == '8.2'
+        name: Tests and coverage (100 % of lines and branches, blocking)
+        run: composer coverage
+
+  integration:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        joomla: ["joomla:4.4-php8.1-apache", "joomla:5-php8.2-apache"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: zip
+          coverage: none
+      - run: php bin/build.php
+      - name: JED Checker (official tool of the Joomla Extensions Directory)
+        run: git clone --quiet --depth 1 --branch 2.4.4 https://github.com/joomla-extensions/jedchecker.git "$RUNNER_TEMP/jedchecker"
+      - name: Install, configure, Lumi, update hook, badge, uninstall
+        env:
+          JOOMLA_IMAGE: ${{ matrix.joomla }}
+          JEDCHECKER: ${{ runner.temp }}/jedchecker
+        run: tests/integration/run.sh
+      - if: matrix.joomla == 'joomla:5-php8.2-apache'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pkg_pathly
+          path: build/dist/pkg_pathly-*.zip
+          retention-days: 14
