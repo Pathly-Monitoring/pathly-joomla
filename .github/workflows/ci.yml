@@ -28,7 +28,10 @@ jobs:
       - run: find src tests bin -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
       - run: vendor/bin/phpcs
       - name: XML manifests are valid
-        run: for f in src/pkg_pathly.xml src/plugins/*/pathly/pathly.xml src/modules/mod_pathly/mod_pathly.xml updates/pkg_pathly.xml; do php -r 'exit(simplexml_load_file($argv[1]) === false ? 1 : 0);' "$f"; done
+        run: |
+          for f in src/pkg_pathly.xml src/plugins/*/pathly/pathly.xml src/modules/mod_pathly/mod_pathly.xml updates/pkg_pathly.xml; do
+            php -r 'exit(simplexml_load_file($argv[1]) === false ? 1 : 0);' "$f"
+          done
 
   test:
     runs-on: ubuntu-latest
