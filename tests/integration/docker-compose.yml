@@ -1,0 +1,47 @@
+# Joomla, its database and a simulated Pathly API, for tests/integration/run.sh.
+name: pathly-joomla-it
+
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_ROOT_PASSWORD: root-password-it
+      MARIADB_DATABASE: joomla
+      MARIADB_USER: joomla
+      MARIADB_PASSWORD: joomla-password-it
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      retries: 40
+
+  mock:
+    image: ${JOOMLA_IMAGE:-joomla:5-php8.2-apache}
+    entrypoint: ["php", "-S", "0.0.0.0:8080", "/mock/router.php"]
+    volumes:
+      - ./mock:/mock:ro
+    ports:
+      - "8892:8080"
+
+  joomla:
+    image: ${JOOMLA_IMAGE:-joomla:5-php8.2-apache}
+    depends_on:
+      db:
+        condition: service_healthy
+      mock:
+        condition: service_started
+    environment:
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: joomla
+      JOOMLA_DB_PASSWORD: joomla-password-it
+      JOOMLA_DB_NAME: joomla
+      JOOMLA_SITE_NAME: Pathly test
+      JOOMLA_ADMIN_USER: Pathly Admin
+      JOOMLA_ADMIN_USERNAME: pathlyadmin
+      JOOMLA_ADMIN_PASSWORD: integration-password-it
+      JOOMLA_ADMIN_EMAIL: admin@example.test
+      # Only accepted for a local test host: see Client::resolveBase().
+      PATHLY_API_BASE: http://mock:8080
+    volumes:
+      - ../../build/dist:/pkg:ro
+    ports:
+      - "8891:80"
