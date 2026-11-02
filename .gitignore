@@ -1,0 +1,4 @@
+/vendor/
+/build/
+/tests/integration/mock/run-shot.png
+.phpunit.result.cache

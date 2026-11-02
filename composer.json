@@ -1,0 +1,42 @@
+{
+    "name": "pathly/pathly-joomla",
+    "description": "Pathly for Joomla 4 and 5: a Ping on the site, a Flow prepared by Lumi, replayed after every update.",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://pathlyhq.com",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpunit/phpunit": "^9.6",
+        "squizlabs/php_codesniffer": "^3.10"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pathly\\Plugin\\System\\Pathly\\": "src/plugins/system/pathly/src/",
+            "Pathly\\Plugin\\Content\\Pathly\\": "src/plugins/content/pathly/src/",
+            "Pathly\\Module\\Pathly\\Administrator\\": "src/modules/mod_pathly/src/",
+            "Pathly\\Tests\\": "tests/Support/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "7.4.33"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "test": "phpunit",
+        "coverage": [
+            "@php -d xdebug.mode=coverage vendor/bin/phpunit --path-coverage --coverage-php build/coverage.cov --coverage-text",
+            "@php bin/check-coverage.php build/coverage.cov"
+        ],
+        "build": "@php bin/build.php"
+    }
+}

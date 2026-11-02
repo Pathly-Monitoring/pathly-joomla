@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="Pathly Joomla">
+    <description>PSR-12, and PHP 7.4 compatibility for Joomla 4.</description>
+    <file>src</file>
+    <file>tests</file>
+    <file>bin</file>
+    <arg name="extensions" value="php"/>
+    <arg value="sp"/>
+    <arg name="colors"/>
+
+    <rule ref="PSR12">
+        <!-- Joomla requires the `defined('_JEXEC') or die` guard right after the namespace and imports. -->
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    </rule>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="150"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+    <!-- Joomla installer scripts are named Pkg_<element>InstallerScript, without a namespace. -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>src/script.php</exclude-pattern>
+        <exclude-pattern>tests/stubs/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>src/script.php</exclude-pattern>
+    </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>tests/stubs/*</exclude-pattern>
+    </rule>
+    <!-- Layouts mix PHP and HTML. -->
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>src/modules/mod_pathly/tmpl/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PHPCompatibility"/>
+    <config name="testVersion" value="7.4-"/>
+</ruleset>
