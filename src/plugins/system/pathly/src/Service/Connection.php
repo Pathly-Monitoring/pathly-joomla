@@ -102,7 +102,13 @@ final class Connection
             return '';
         }
 
-        return preg_replace('/^www\./', '', $parts['host']) . rtrim($parts['path'] ?? '', '/');
+        $host = preg_replace('/^www\./', '', $parts['host']);
+        // Two sites on one host differ by their port (a staging copy on :8080).
+        if (isset($parts['port']) && !\in_array((int) $parts['port'], [80, 443], true)) {
+            $host .= ':' . $parts['port'];
+        }
+
+        return $host . rtrim($parts['path'] ?? '', '/');
     }
 
     /**

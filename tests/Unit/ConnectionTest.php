@@ -150,6 +150,8 @@ final class ConnectionTest extends TestCase
     {
         $this->assertSame('example.test/shop', Connection::normalize(' HTTPS://www.Example.test/shop/ '));
         $this->assertSame('example.test', Connection::normalize('http://example.test'));
+        $this->assertSame('example.test:8080/shop', Connection::normalize('http://example.test:8080/shop/'));
+        $this->assertSame('example.test', Connection::normalize('https://example.test:443'));
         $this->assertSame('', Connection::normalize('not an address'));
         $this->assertSame('', Connection::normalize('http:///x'));
     }
